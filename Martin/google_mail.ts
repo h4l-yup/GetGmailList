@@ -48,11 +48,7 @@ export async function get_mails(page: puppeteer.Page): Promise<mail[]> {
     const sender_texts = await Promise.all(
         senders.map(value => selectors_text(value))
     );
-    // const all_promises = _.union(subjects.map(value => selectors_text(value)),sender.map(value => selectors_text(value)));
-    // const subject_and_sender_texts = await Promise.all(all_promises);
-    // const length = subject_and_sender_texts.length/2;
-    // const subject_texts = subject_and_sender_texts.slice(0, length);
-    // const sender_texts = subject_and_sender_texts.slice(length);
+
     if(subject_texts.length === 0 && sender_texts.length === 0 ){
         throw new Error('get_mails fail');
     }

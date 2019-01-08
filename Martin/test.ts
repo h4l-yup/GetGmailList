@@ -11,6 +11,12 @@ const account: account = {
 };
 
 describe('start program', function() {
+	it('account check', function(){
+		console.log('id:'+account.id + "/password:"+account.password);
+		if(account.id === undefined || account.password === undefined){
+			fail('id or password null or undefined');
+		}
+	});
 	it('get brower', async function() {
 		try {
 			browser = await get_browser();
