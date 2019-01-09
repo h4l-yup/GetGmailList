@@ -2,22 +2,15 @@
 
 import * as puppeteer from 'puppeteer';
 import { account, mail } from './interfaces';
-import * as _ from 'lodash';
 
 export async function get_browser(): Promise<puppeteer.Browser>{
-    try {
-        return await puppeteer.launch({headless:true});
-    } catch (error) {
-        throw error;
-    }
+    return await puppeteer.launch({headless:true})
+        .catch(error => {throw error});
 }
 
 export async function get_page(browser: puppeteer.Browser): Promise<puppeteer.Page>{
-    try {
-        return await browser.newPage();
-    } catch (error) {
-        throw error;
-    }
+    return await browser.newPage()
+        .catch(error => {throw error});;
 }
 
 export async function google_login(user : account, page: puppeteer.Page): Promise<void>{
@@ -25,35 +18,23 @@ export async function google_login(user : account, page: puppeteer.Page): Promis
     await page.goto('https://accounts.google.com/ServiceLogin/identifier?service=mail&passive=true&rm=false&continue=https%3A%2F%2Fmail.google.com%2Fmail%2F&ss=1&scc=1&ltmpl=default&ltmplcache=2&emr=1&osid=1&flowName=GlifWebSignIn&flowEntry=AddSession');
     await page.type('#identifierId', user.id);
     await page.click('#identifierNext > content');
-    try{
-        await page.waitForNavigation({waitUntil:"networkidle0", timeout:2000});
-    }catch(error){
-        throw error;
-    }
+    await page.waitForNavigation({waitUntil:"networkidle0", timeout:3000})
+        .catch(error => {throw error});;
     await page.type('#password > div.aCsJod.oJeWuf > div > div.Xb9hP > input', user.password);
     await page.click('#passwordNext > div.ZFr60d.CeoRYc');
-    try{
-        await page.waitForSelector('span.bog>span',{visible:true, timeout:5000});
-    }catch(error){
-        throw error;
-    }
+    await page.waitForSelector('span.bog>span',{visible:true, timeout:6000})
+        .catch(error => {throw error});
 }
 
-export async function get_mails(page: puppeteer.Page): Promise<mail[]> {
-    const subjects = await page.$$('span.bog>span');
+export async function get_mails(page: puppeteer.Page) {
+    const subjects = await page.$$('span.bog>span, tbody tr .yW .bA4 span');
     const subject_texts = await Promise.all(
         subjects.map(value => selectors_text(value))
     );
-    const senders = await page.$$('span.yP');
-    const sender_texts = await Promise.all(
-        senders.map(value => selectors_text(value))
-    );
-
-    if(subject_texts.length === 0 && sender_texts.length === 0 ){
-        throw new Error('get_mails fail');
-    }
-
-    const mails = subject_texts.map((subject_text, index) => set_mail(subject_text, sender_texts[index]));
+    const mails = subject_texts.map(
+        (subject_text, index) => index%2===0?set_mail(subject_texts[index+1], subject_text):0
+    ).filter(value => value!==0);
+    
     return mails;
 }
 
@@ -67,9 +48,6 @@ function set_mail(subject_value: string, sender_value: string): mail{
 }
 
 export async function close_browser(browser : puppeteer.Browser): Promise<void>{
-    try {
-        await browser.close();
-    } catch (error) {
-        throw error;
-    }
+    await browser.close()
+        .catch(error => {throw error});
 }
