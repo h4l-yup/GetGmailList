@@ -27,13 +27,13 @@ export async function google_login(user : account, page: puppeteer.Page): Promis
 }
 
 export async function get_mails(page: puppeteer.Page) {
-    const subjects = await page.$$('span.bog>span, tbody tr .yW .bA4 span');
-    const subject_texts = await Promise.all(
-        subjects.map(value => selectors_text(value))
+    const mail_elements = await page.$$('span.bog>span, tbody tr .yW .bA4 span');
+    const element_texts = await Promise.all(
+        mail_elements.map(mail_elements => selectors_text(mail_elements))
     );
-    const mails = subject_texts.map(
-        (subject_text, index) => index%2===0?set_mail(subject_texts[index+1], subject_text):0
-    ).filter(value => value!==0);
+    const mails = element_texts.map(
+        (element_text, index) => index%2===0?set_mail(element_texts[index+1], element_text):0
+    ).filter(mail => mail!==0);
     
     return mails;
 }
