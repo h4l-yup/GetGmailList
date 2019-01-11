@@ -1,0 +1,30 @@
+{
+  "compilerOptions": {
+    "module": "commonjs",
+    "moduleResolution": "node",
+    "target": "es6",
+    "lib": [
+        "dom",
+        "es6"
+    ],
+    "removeComments": true,
+    "noImplicitAny": false,
+    "inlineSourceMap": true,
+    "noEmitOnError": false,
+    "strictNullChecks": true,
+    "noImplicitReturns": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "declaration": false,
+    "outDir": "./build",
+    "baseUrl": ".",
+    "paths": {
+      "*": [
+          "*"
+      ]
+    }
+  },
+  "exclude": [
+    "node_modules"
+  ]
+}

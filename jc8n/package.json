@@ -1,0 +1,38 @@
+{
+  "name": "getgmaillist",
+  "version": "1.0.0",
+  "description": "Get the list of Gmail List of specific account with TypeScript &amp; Puppeteer",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha --require ts-node/register tests/*.ts"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/h4l-yup/getGmailList.git"
+  },
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/h4l-yup/getGmailList/issues"
+  },
+  "homepage": "https://github.com/h4l-yup/getGmailList#readme",
+  "dependencies": {
+    "@types/puppeteer": "^1.11.1",
+    "async-prompt": "^1.0.1",
+    "cheerio": "^1.0.0-rc.2",
+    "puppeteer": "^1.11.0",
+    "ts-mocha": "^2.0.0"
+  },
+  "devDependencies": {
+    "@types/chai": "^4.1.7",
+    "@types/mocha": "^5.2.5",
+    "chai": "^4.2.0",
+    "debug": "^4.0.1",
+    "mocha": "^5.2.0",
+    "mocha-typescript": "^1.1.17",
+    "nyc": "^13.1.0",
+    "source-map-support": "^0.5.9",
+    "ts-node": "^7.0.1",
+    "typescript": "^3.2.2"
+  }
+}
