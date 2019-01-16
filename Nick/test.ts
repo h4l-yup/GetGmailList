@@ -1,4 +1,3 @@
-require('ts-mocha');
 const getGmail = require('./getGmailList');
 const assert = require('chai').assert;
 
@@ -21,7 +20,6 @@ describe('test for getGmailList', ()=>{
         wrongOutput.mails.forEach(mail => {
             assert.isObject(mail);
             assert.hasAllKeys(mail, ['sender', 'subject']);
-            assert.notProperty(mail, '');
         })
     }).timeout(100000);
 })
