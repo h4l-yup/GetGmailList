@@ -1,4 +1,5 @@
 export interface GmailCrawler {
+    getCredential(): Promise<{ identifier: string, password: string }>;
     gmailInit(identifier: string, password: string): Promise<void>;
-    getGmailList(): Promise<{ title: string | null; content: string | null }[]>;
+    getGmailList(): Promise<{subject: string | null,  sender: string | null }[]>;
 }
