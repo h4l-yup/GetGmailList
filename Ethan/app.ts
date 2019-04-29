@@ -1,6 +1,4 @@
 import { GmailCrawlerImpl } from "./api/GmailCrawlerImpl";
-// import { CrawlerIOImpl } from "./api/CrawlerIOImpl";
-// import { CrawlerIO } from "api/CrawlerIo";
 import { GmailCrawler } from "api/GmailCrawler";
 
 const app = async (gmailCrawler: GmailCrawler) => {

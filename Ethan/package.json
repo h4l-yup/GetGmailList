@@ -27,6 +27,7 @@
     "@types/mocha": "^5.2.6",
     "@types/puppeteer": "^1.6.3",
     "chai": "^4.2.0",
+    "chai-as-promised": "^7.1.1",
     "debug": "^4.0.1",
     "mocha": "^5.2.0",
     "ts-mocha": "^2.0.0",
