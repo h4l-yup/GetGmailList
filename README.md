@@ -36,3 +36,6 @@ mails: [
 
 # 과제 제출
 - 완성한 과제를 PR을 통해 제출하되 master branch가 아닌 자신의 이름으로 된 branch에 PR 합니다.
+
+# 과제 동작시
+- account.json을 만들어야 동작이 됩니다. 
