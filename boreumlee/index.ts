@@ -1,18 +1,7 @@
 import * as puppeteer from 'puppeteer';
 import * as cheerio from 'cheerio';
 import * as account from './account.json';
-
-export interface Input {
-    id: string;
-    pw: string;
-}
-export interface Mail {
-    sender: string;
-    subject: string;
-}
-export interface Output {
-    mails: Mail[];
-}
+import {Input, Mail} from './interface'
 
 export const getGmailHTML = async ({ id, pw }: Input): Promise<string> => {
     try {
@@ -50,37 +39,26 @@ export const getGmailHTML = async ({ id, pw }: Input): Promise<string> => {
     }
 };
 
-export const getMails = (html: string): Output => {
+export const getMails = (html: string): Array<Mail> => {
     const $ = cheerio.load(html);
-    const mails: Mail[] = [];
-    const senders: string[] = [];
-    const subjects: string[] = [];
-    $('table.F.cf.zt')
-        .find('div.yW > span.bA4')
-        .each(function() {
-            senders.push($(this).text());
-        });
-    $('table.F.cf.zt')
-        .find('tr > td.xY.a4W')
-        .find('span.bog > span')
-        .each(function() {
-            subjects.push($(this).text());
-        });
-    for (let i = 0; senders.length > i; i++) {
-        mails.push({
-            sender: senders[i],
-            subject: subjects[i],
-        });
-    }
 
-    return { mails };
+    const mails: Mail[] = $('table.F.cf.zt')
+        .find('tr > td.yX.xY > div.afn')
+        .map(function() {
+            const sender = $(this).find('span.bA4 > span:nth-child(1)').text();
+            $('span').remove('.bx0');
+            const subject = $(this).find('span:nth-child(2)').text();
+            return {sender,subject}
+        }).get();
+
+    return mails;
 };
 
 export const getGmailList = async (): Promise<Mail[]> => {
     try {
         const html = await getGmailHTML(account);
-        const gmail = getMails(html);
-        return gmail.mails;
+        const gmailList = getMails(html);
+        return gmailList;
     } catch (error) {
         throw new Error(error);
     }

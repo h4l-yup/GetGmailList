@@ -1,6 +1,7 @@
 import { getGmailHTML, getMails, getGmailList } from './index';
 import * as account from './account.json';
 import * as assert from 'chai';
+import {Mail} from './interface';
 
 describe('Gmail list 불러오기', () => {
     describe('getGmailHTML', () => {
@@ -22,13 +23,13 @@ describe('Gmail list 불러오기', () => {
         it('Gmail html', async () => {
             const html = await getGmailHTML(account);
             const mails = getMails(html);
-            assert.assert.equal(verifyMailsLength(mails.mails), true);
+            assert.assert.equal(verifyMailsLength(mails), true);
         }).timeout(15000);
 
         it('다른 html', () => {
             const mails = getMails('<html></html>');
-            assert.assert.lengthOf(mails.mails, 0);
-            assert.assert.equal(verifyMailsLength(mails.mails), false);
+            assert.assert.lengthOf(mails, 0);
+            assert.assert.equal(verifyMailsLength(mails), false);
         }).timeout(15000);
     });
 });
@@ -47,7 +48,7 @@ function verifyGetGmailHTML(html: string): boolean {
     return true;
 }
 
-function verifyMailsLength(mails: Array<any>): boolean {
+function verifyMailsLength(mails: Array<Mail>): boolean {
     if (mails.length > 0) {
         return true;
     }
